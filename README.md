@@ -1,4 +1,4 @@
-# 📸 AWS Serverless Image Processing Pipeline
+# AWS Serverless Image Processing Pipeline
 
 A fully serverless, event-driven image processing pipeline built using AWS services.
 
