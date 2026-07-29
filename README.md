@@ -6,67 +6,13 @@ The project automatically processes uploaded images, resizes them, applies a wat
 
 ---
 
-# 🚀 Architecture
+# Architecture
 
-```mermaid
-flowchart LR
-
-    User([User])
-
-    subgraph Upload
-        S3Source[(Amazon S3<br/>Source Bucket)]
-        SQS[Amazon SQS<br/>Image Processing Queue]
-        DLQ[Dead Letter Queue]
-    end
-
-    subgraph Workflow
-        StartLambda[Lambda<br/>StartImageWorkflow]
-        SF[AWS Step Functions]
-
-        Resize[Lambda<br/>ResizeImage]
-        Watermark[Lambda<br/>WatermarkImage]
-        Metadata[Lambda<br/>SaveImageMetadata]
-    end
-
-    subgraph Storage
-        S3Dest[(Amazon S3<br/>Destination Bucket)]
-        Dynamo[(Amazon DynamoDB)]
-    end
-
-    subgraph Notifications
-        SNS[Amazon SNS]
-    end
-
-    User -->|Upload Image| S3Source
-
-    S3Source -->|ObjectCreated Event| SQS
-
-    SQS -->|Trigger| StartLambda
-
-    SQS -. Failed Messages .-> DLQ
-
-    StartLambda -->|Start Execution| SF
-
-    SF --> Resize
-
-    Resize -->|Upload Processed Image| S3Dest
-
-    Resize --> Watermark
-
-    Watermark -->|Update Image| S3Dest
-
-    Watermark --> Metadata
-
-    Metadata --> Dynamo
-
-    Metadata --> SNS
-
-    SNS --> User
-```
+<img width="1536" height="1024" alt="Architecture Diagram" src="https://github.com/user-attachments/assets/a4a03936-3ee8-4829-b140-e029d6128c25" />
 
 ---
 
-# 📖 Project Overview
+# Project Overview
 
 This project demonstrates how to build a fully serverless image processing system using AWS managed services.
 
@@ -85,7 +31,7 @@ The project follows an event-driven architecture that is scalable, loosely coupl
 
 ---
 
-# 🏗 AWS Services Used
+# AWS Services Used
 
 | Service | Purpose |
 |----------|----------|
@@ -101,7 +47,7 @@ The project follows an event-driven architecture that is scalable, loosely coupl
 
 ---
 
-# ⚙ Workflow
+# Workflow
 
 ```
 Upload Image
@@ -134,24 +80,9 @@ Amazon DynamoDB
 Amazon SNS
 ```
 
----
 
-# 📂 Project Structure
 
-```
-.
-├── ResizeImage/
-├── WatermarkImage/
-├── SaveImageMetadata/
-├── StartImageWorkflow/
-├── diagrams/
-├── screenshots/
-└── README.md
-```
-
----
-
-# ✨ Features
+# Features
 
 - Event-driven architecture
 - Serverless processing
@@ -165,7 +96,7 @@ Amazon SNS
 
 ---
 
-# 📊 DynamoDB Metadata
+# DynamoDB Metadata
 
 Each processed image stores:
 
@@ -182,7 +113,7 @@ Each processed image stores:
 
 ---
 
-# 📬 Notifications
+# Notifications
 
 When processing finishes successfully, Amazon SNS sends an email notification containing:
 
@@ -192,7 +123,7 @@ When processing finishes successfully, Amazon SNS sends an email notification co
 
 ---
 
-# 📈 Scalability
+# Scalability
 
 The architecture is designed using AWS managed services, allowing automatic scaling without provisioning servers.
 
@@ -206,40 +137,41 @@ Benefits include:
 
 ---
 
-# 🔮 Future Improvements
-
-The following enhancements are planned for the next version:
-
-- API Gateway
-- Pre-signed URL uploads
-- Amazon CloudFront
-- Retry & Catch in Step Functions
-- Automated failure testing
-- Image validation
-- Thumbnail generation
-- Multiple image formats (WebP)
-
----
 
 # 📸 Screenshots
 
-Add screenshots for:
-
 - AWS Step Functions
+  <img width="1919" height="859" alt="Step Function Workflow + Code" src="https://github.com/user-attachments/assets/102b2ebd-91db-41d9-a395-1946dd3d8a80" />
+
 - Lambda Functions
+  <img width="1919" height="865" alt="Lambda Functions" src="https://github.com/user-attachments/assets/0dc15935-077d-4a3d-a407-60e33925c97a" />
+
 - DynamoDB Table
+  <img width="1919" height="826" alt="DynamoDB Table" src="https://github.com/user-attachments/assets/07cce073-1abe-4080-896d-b434ed2a0b51" />
+
 - S3 Buckets
+  <img width="1919" height="820" alt="S3 Source Bucket" src="https://github.com/user-attachments/assets/0b0c370c-f874-4a24-b87a-86bbbed5cf32" />
+  <img width="1913" height="858" alt="Destination Bucket" src="https://github.com/user-attachments/assets/0c27aa11-feaf-499c-a08c-e51ad5a58d83" />
+
+
 - SNS Email
+  <img width="1915" height="908" alt="Email Notification" src="https://github.com/user-attachments/assets/541b1afe-6385-460c-a93d-e2ea865ce583" />
+
 - CloudWatch Logs
+  <img width="1919" height="863" alt="CloudWatch Logs" src="https://github.com/user-attachments/assets/891fa7b1-e9a5-4dc2-bc3b-1b6c2e9ff14c" />
+
 
 ---
 
-# 👨‍💻 Author
+# Author
 
-Ahmed Ehab
+**Ahmed Ehab**
 
-Computer Science Graduate
+Computer Science Graduate | Junior Data Engineer | AWS Cloud Practitioner
 
-Junior Data Engineer
+---
 
-AWS Cloud Practitioner
+# Connect with Me
+
+🔗 **LinkedIn:**  
+[https://www.linkedin.com/in/YOUR-LINKEDIN-USERNAME/](https://www.linkedin.com/in/ahmed-ehab-73635624a/)
